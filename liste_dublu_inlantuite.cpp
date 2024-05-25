@@ -2,8 +2,6 @@
 
 //voi defini functiile Creare(), Aisare(), Inserare(poz, val), CautareVal(val), Stergere(poz)
 //totodata aceste functii sunt definite sa functioneze pentru variabila globala L
-//daca le-as face generale (sa mearga pentru orice lista care ar fi creata in main) ar aparea probleme
-//in sensul in care un pointer transmis ca parametru este transmis drept copie si nu ar aparea modificari
 #include <iostream>
 
 struct Nod{
@@ -12,9 +10,7 @@ struct Nod{
     int info;
 };
 
-Nod* L;
-
-void Adauga(int nr){
+void Adauga(Nod* &L, int nr){
     if(L == NULL) //daca lista nu are niciun element
     {
         L  = new Nod;
@@ -32,7 +28,7 @@ void Adauga(int nr){
     }
 }
 
-void Creare()
+void Creare(Nod* &L)
 {
     L = NULL; //lista este definita trebuie sa o intializam cu NULL pentru a si ca este vida
     int n, val;
@@ -40,11 +36,11 @@ void Creare()
     for(int i = 0; i < n; i++) //citim elementele pe care le vrem in lista
         {
             std::cin >> val;
-            Adauga(val);
+            Adauga(L, val);
         }
 }
 
-int CautareVal(int val){ //functie care cauta prima aparitie a valorii val si returneaza pozitia ei
+int CautareVal(Nod* &L, int val){ //functie care cauta prima aparitie a valorii val si returneaza pozitia ei
     Nod* x = new Nod; //pointer de tip Nod cu care vom parcurge lista L pentru a nu pierde informatiile din aceasta
     x = L;
     int ct = 1; //variabila cu care contorizam pozitia la care ne aflam la un moment dat in lista
@@ -58,13 +54,13 @@ int CautareVal(int val){ //functie care cauta prima aparitie a valorii val si re
     return -1; //daca nu am gasit valoarea returnam -1 care semnifica ca nu a fost gasita
 }
 
-void Inserare(int poz, int val){
+void Inserare(Nod* &L, int poz, int val){
     Nod* x = new Nod; //pointer de tip Nod cu care vom parcurge lista L pentru a nu pierde informatiile din aceasta
     x = L;
     int ct = 1;
     if(poz == 1) //daca cumva trebuie sa inseram la pozitia 1 in lista, pur si simplu mai adaugam un nod care va deveni capul listei
     {
-        Adauga(val);
+        Adauga(L, val);
         return;
     }
     while(x != 0 && ct != poz-1) //cautam nodul de pe pozitia poz-1 pentru a putea ulterior sa inseram la pozitia poz ajutandu-ma de x -> next
@@ -82,7 +78,7 @@ void Inserare(int poz, int val){
     }
     return;
 }
-void Stergere(int poz){ 
+void Stergere(Nod* &L, int poz){ 
     Nod* x = new Nod; //pointer de tip Nod cu care vom parcurge lista L pentru a nu pierde informatiile din aceasta
     x = L;
     int ct = 1;
@@ -110,7 +106,7 @@ void Stergere(int poz){
     }
 }
 
-void Afisare(){
+void Afisare(Nod* L){
     Nod* x = new Nod;
     x = L;
     while(x != 0)
@@ -121,21 +117,36 @@ void Afisare(){
     std::cout << std::endl;
 }
 
+void StergereLista(Nod* &L) //stergem elementele alocate dinamic pentru a evita memory leaks
+{
+    Nod* x; //va pointa catre aceeasi zona de memorie ca si L deci ne vom ajuta de x sa o stergem
+    while(L != 0)
+    {
+        x = L -> next;
+        delete L;
+        L = x;
+    }
+    std::cout << "S-a sters lista!";
+}
+
+
 int main()
 {
-    Creare();
-    Afisare();
-    Inserare(1,0);
-    Afisare();
-    Inserare(6,5);
-    Afisare();
-    Inserare(3,8);
-    Afisare();
-    Stergere(1);
-    Afisare();
-    Stergere(6);
-    Afisare();
-    Stergere(2);
-    Afisare();
+    Nod* L;
+    Creare(L);
+    Afisare(L);
+    Inserare(L,1,0);
+    Afisare(L);
+    Inserare(L,6,5);
+    Afisare(L);
+    Inserare(L,3,8);
+    Afisare(L);
+    Stergere(L,1);
+    Afisare(L);
+    Stergere(L,6);
+    Afisare(L);
+    Stergere(L,2);
+    Afisare(L);
+    StergereLista(L);
     return 0;
 }
