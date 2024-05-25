@@ -8,9 +8,7 @@ struct Nod{
     int pozitie;
 };
 
-Nod* L;
-
-void Adauga(int nr, int poz){
+void Adauga(Nod* &L, int nr, int poz){
     if(L == NULL) //daca lista nu are niciun element
     {
         L  = new Nod;
@@ -28,7 +26,7 @@ void Adauga(int nr, int poz){
     }
 }
 
-void Creare()
+void Creare(Nod* &L)
 {
     L = NULL; //lista este definita trebuie sa o intializam cu NULL pentru a si ca este vida
     int n, val;
@@ -36,18 +34,18 @@ void Creare()
     for(int i = 0; i < n; i++) //citim elementele pe care le vrem in lista
         {
             std::cin >> val;
-            Adauga(val, i);
+            Adauga(L, val, i);
         }
 }
 
 
-void Inserare(int poz, int val, int pozitie){
+void Inserare(Nod* &L, int poz, int val, int pozitie){
     Nod* x = new Nod; //pointer de tip Nod cu care vom parcurge lista L pentru a nu pierde informatiile din aceasta
     x = L;
     int ct = 1;
     if(poz == 1) //daca cumva trebuie sa inseram la pozitia 1 in lista, pur si simplu mai adaugam un nod care va deveni capul listei
     {
-        Adauga(val, pozitie);
+        Adauga(L, val, pozitie);
         return;
     }
     while(x != 0 && ct != poz-1) //cautam nodul de pe pozitia poz-1 pentru a putea ulterior sa inseram la pozitia poz ajutandu-ma de x -> next
@@ -66,7 +64,7 @@ void Inserare(int poz, int val, int pozitie){
     return;
 }
 
-void Stergere(int poz){ 
+void Stergere(Nod* &L, int poz){ 
     Nod* x = new Nod; //pointer de tip Nod cu care vom parcurge lista L pentru a nu pierde informatiile din aceasta
     x = L;
     int ct = 1;
@@ -100,9 +98,8 @@ struct Nod_coada{
     int poz_mai_mare;
 };
 
-Nod_coada* C;
 
-void AdaugaCoada(int poz1, int poz2)
+void AdaugaCoada(Nod_coada* &C, int poz1, int poz2)
 {
     Nod_coada* nod = new Nod_coada;
     nod -> poz_element = poz1;
@@ -121,7 +118,7 @@ void AdaugaCoada(int poz1, int poz2)
     x -> next = nod;
 }
 
-void AfisareCoada()
+void AfisareCoada(Nod_coada* C)
 {
     Nod_coada* x = C;
     while(x != 0)
@@ -135,29 +132,31 @@ void AfisareCoada()
 
 int main()
 {
+    Nod* L = NULL;
+    Nod_coada* C = NULL;
     int n, val;
     std::cin >> n >> val;
     L = NULL; //o lista vida inca nu avem nimic in ea
     C = NULL;
-    Adauga(val, 0);
+    Adauga(L, val, 0);
     for(int i = 1; i < n; i++)
         {
             std::cin >> val;
             Nod* x = L;
             while(val > x -> element)
             {
-                AdaugaCoada(x -> pozitie, i);
-                Stergere(1);
+                AdaugaCoada(C, x -> pozitie, i);
+                Stergere(L, 1);
                 x = x -> next;
             }
-            Inserare(1, val, i);
+            Inserare(L, 1, val, i);
         }
     Nod* x = L;
     while(x != 0)
     {
-        AdaugaCoada(x -> pozitie, -1); //nu am gasit niciun element in vector care sa fie mai mare decat elementul de pe respectiva pozitie
+        AdaugaCoada(C, x -> pozitie, -1); //nu am gasit niciun element in vector care sa fie mai mare decat elementul de pe respectiva pozitie
         x = x-> next;
     }
-    AfisareCoada();
+    AfisareCoada(C);
     return 0;
 }
