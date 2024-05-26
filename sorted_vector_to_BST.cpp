@@ -1,6 +1,11 @@
-//VECTOR SORTAT -> BTS (ARBORE BINAR DE CAUTARE - SEARCH BINARY TREE)
+//VECTOR SORTAT -> BTS (ARBORE BINAR DE CAUTARE BALANSAT - BALANCED SEARCH BINARY TREE)
 #include <iostream>
 #include <vector>
+
+//ce este un BTS balansat si ce idee de implementare folosesc?
+//un arbore binar de cautare balansat este un arbore care respecta anumite conditii: orice nod are maxim 2 fii, in stanga mai mic, in dreapta mai mare, si, in plus, pentru a fi balansat inseamna
+//ca pozitionarea nodurilor in arbore trebuie sa fie optima pentru a pastra eficienta arborelui
+//balanced bts are timp logartimic pentru majoritatea operatiilor aplicate asupra lui
 
 //structura care ne ajuta sa memoram nodurile unui BTS
 struct Nod{
