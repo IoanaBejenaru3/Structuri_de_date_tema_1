@@ -6,6 +6,7 @@
 //un arbore binar de cautare balansat este un arbore care respecta anumite conditii: orice nod are maxim 2 fii, in stanga mai mic, in dreapta mai mare, si, in plus, pentru a fi balansat inseamna
 //ca pozitionarea nodurilor in arbore trebuie sa fie optima pentru a pastra eficienta arborelui
 //balanced bts are timp logartimic pentru majoritatea operatiilor aplicate asupra lui
+//pentru implementare ne ajutam de faptul ca vectorul dat ca input este sortat ceea ce ne ajuta sa determinam mereu elementul "cel mai optim" pentru a fi radacina arborelui, radacina unui subarbore, s.a.
 
 //structura care ne ajuta sa memoram nodurile unui BTS
 struct Nod{
