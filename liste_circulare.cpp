@@ -1,6 +1,4 @@
 //LISTE CIRCULARE
-
-//voi defini functiile Creare(), Aisare(), Inserare(poz, val), CautareVal(val), Stergere(poz)
 #include <iostream>
 
 struct Nod{

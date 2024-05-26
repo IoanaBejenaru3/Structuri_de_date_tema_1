@@ -1,9 +1,4 @@
 //LISTE SIMPLU INLANTUITE
-
-//voi defini functiile Creare(), Aisare(), Inserare(poz, val), CautareVal(val), Stergere(poz)
-//totodata aceste functii sunt definite sa functioneze pentru variabila globala L
-//daca le-as face generale (sa mearga pentru orice lista care ar fi creata in main) ar aparea probleme
-//in sensul in care un pointer transmis ca parametru este transmis drept copie si nu ar aparea modificari
 #include <iostream>
 
 struct Nod{

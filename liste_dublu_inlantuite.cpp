@@ -1,7 +1,4 @@
 //LISTE DUBLU INLANTUITE
-
-//voi defini functiile Creare(), Aisare(), Inserare(poz, val), CautareVal(val), Stergere(poz)
-//totodata aceste functii sunt definite sa functioneze pentru variabila globala L
 #include <iostream>
 
 struct Nod{
