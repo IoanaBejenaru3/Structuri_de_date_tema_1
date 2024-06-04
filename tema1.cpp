@@ -1,5 +1,4 @@
 #include <iostream>
-
 /* METODE DE SORTARE */
 
 //BUBBLE SORT
@@ -95,9 +94,46 @@ void MergeSort(int v[], int length, int left, int right)
 
 //HEAPSORT
 
-void HeapSort()
+
+void Heapify(int v[], int n, int i)
 {
-    
+    int largest = i;
+    int left = 2 * i + 1, right = 2 * i + 2;
+
+    //daca exista copilul stang al elementului curent (largest)
+    if(left < n && v[left] > v[largest]) largest = left; 
+    //la fel si pentru copilul din dreapta
+    if(right < n && v[right] > v[largest]) largest = right;
+
+    if(largest != i)
+    {
+        int aux = v[largest]; 
+        v[largest] = v[i];
+        v[i] = aux;
+        Heapify(v, n, largest);
+    }
+}
+
+void HeapSort(int v[], int n)
+{
+    //noi deja avem vectorul deci trebuie sa ne asiguram ca aducem vectorul sub forma de vector pentru "heap" adica elem i are la 2*i+1 si 2*i+2 copii aferenti
+    for(int i = n / 2 - 1; i >= 0; i--)
+        Heapify(v, n, i);
+
+    //acum ca vectorul este in pozitia corecta putem incepe sa scoatem din el valori obtinand astfel sir de numere sortate cres / descres
+    for(int i = n - 1; i >= 0; i--)
+    {
+        //luam pe rand elementele de la final si le dam swap cu primul elem din vect
+        int aux = v[i];
+        v[i] = v[0];
+        v[0] = aux;
+        //acum pentru a ne asigura ca o sa avem ca prim element cel maxim din vector-ul ramas, trebuie sa aplicam din nou heapify pe vectorul redus
+        //incepem heapify-ul de la primul element deoarece acela este nodul caruia trebuie sa ii gasim pozitia in heap
+        //astfel elem coboara in heap pana la pozitia corecta
+        Heapify(v, i, 0);
+        //vectorul la final va fi sortat deoarece elemntul maxim mereu ajunge pe ultima pozitie valabila datorita swapului
+        //deci sortarea si heapifyul se intampla in acelasi vector doar ca la intervale diferite ale vectorului
+    }
 }
 
 int main()
@@ -108,7 +144,7 @@ int main()
     // SelectionSort(v,9);
     // InsertionSort(v,9);
     // MergeSort(v,7,0,6);
-    HeapSort();
+    HeapSort(v,7);
     for(int i = 0; i < 7; i++)
         std::cout << v[i] << " ";
     std::cout << "DAA";
